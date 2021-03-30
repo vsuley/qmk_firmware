@@ -1,6 +1,7 @@
 /*
 Copyright 2019 @foostan
 Copyright 2020 Drashna Jaelre <@drashna>
+Copyright 2021 Vinayak Suley <@vsuley> 
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -24,59 +25,46 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define VOLUP KC__VOLUP
 #define VOLDOWN KC__VOLDOWN
 
-#define COLE 0
-#define NUMS 1
-#define SYMS 2
-#define SYST 3
+
+// Each layer gets a name for readability, which is then used in the keymap matrix below.
+// The underscores don't mean anything - you can have a layer called STUFF or any other name.
+// Layer names don't all need to be of the same length, obviously, and you can also skip them
+// entirely and just use numbers.
+enum crkbd_layers {
+  _COLE,
+  _NUMS,
+  _SYMS,
+  _SYST
+};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [COLE] = LAYOUT_split_3x6_3(
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_TAB,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SLSH, KC_BSPC,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LCTL,    KC_A,    KC_R,    KC_S,    KC_T,    KC_D,                         KC_H,    KC_N,    KC_E,    KC_I,    KC_O, KC_QUOT,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_K,    KC_M, KC_COMM,  KC_DOT, KC_SCLN,  KC_ESC,
-  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI,  KC_SPC,MO(NUMS),   MO(SYMS),  KC_ENT, KC_RALT
-                                      //`--------------------------'  `--------------------------'
+  [_COLE] = LAYOUT_split_3x6_3(
+       KC_TAB,     KC_Q,     KC_W,     KC_F,     KC_P,     KC_G,                    KC_J,     KC_L,     KC_U,     KC_Y,  KC_SLSH,  KC_BSPC,
+      KC_LSFT,     KC_A,     KC_R,     KC_S,     KC_T,     KC_D,                    KC_H,     KC_N,     KC_E,     KC_I,     KC_O,  KC_QUOT,
+      KC_LCTL,     KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,                    KC_K,     KC_M,  KC_COMM,   KC_DOT,  KC_SCLN,   KC_ESC,
+                                    KC_LGUI,MO(_NUMS),   KC_SPC,                  KC_ENT,MO(_SYMS),  KC_RALT
 
   ),
 
-  [NUMS] = LAYOUT_split_3x6_3(
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_TAB,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_BSPC,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LCTL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_LEFT,   KC_UP, KC_DOWN,KC_RIGHT, XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, KC_COMM,  KC_DOT, KC_SLSH,  KC_ESC,
-  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI,  KC_SPC, _______,   MO(SYST),  KC_ENT, KC_RALT
-                                      //`--------------------------'  `--------------------------'
+  [_NUMS] = LAYOUT_split_3x6_3(
+       KC_TAB,     KC_1,     KC_2,     KC_3,     KC_4,     KC_5,                    KC_6,     KC_7,     KC_8,     KC_9,     KC_0,  KC_BSPC,
+      KC_LSFT,   KC_INS,  KC_HOME,    KC_UP,   KC_END,  KC_PGUP,                 KC_PLUS,  KC_MINS,  KC_ASTR,  KC_SLSH,   KC_EQL,  KC_BSLS,
+      KC_LCTL,   KC_DEL,  KC_LEFT,  KC_DOWN,  KC_RGHT,  KC_PGDN,                 XXXXXXX,  XXXXXXX,  KC_COMM,   KC_DOT,  XXXXXXX,   KC_ESC,
+                                 KC_LGUI,    _______,    KC_SPC,                  KC_ENT,MO(_SYST),  KC_RALT
   ),
 
-  [SYMS] = LAYOUT_split_3x6_3(
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_TAB, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                      KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN,  KC_DEL,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LCTL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_MINS,  KC_EQL, KC_BSLS, KC_LBRC, KC_RBRC,  KC_GRV,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_UNDS, KC_PLUS, KC_PIPE, KC_LCBR, KC_RCBR, KC_TILD,
-  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI,  KC_SPC,MO(SYST),    _______,  KC_ENT, KC_RALT
-                                      //`--------------------------'  `--------------------------'
+  [_SYMS] = LAYOUT_split_3x6_3(
+       KC_TAB,  KC_EXLM,    KC_AT,  KC_HASH,   KC_DLR,  KC_PERC,                 KC_CIRC,  KC_AMPR,  KC_ASTR,  KC_LPRN,  KC_RPRN,   KC_DEL,
+      KC_LSFT,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,                 KC_MINS,   KC_EQL,  KC_BSLS,  KC_LBRC,  KC_RBRC,   KC_GRV,
+      KC_LCTL,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,                 KC_UNDS,  KC_PLUS,  KC_PIPE,  KC_LCBR,  KC_RCBR,  KC_TILD,
+                                    KC_LGUI,MO(_SYST),   KC_SPC,                  KC_ENT,  _______,  KC_RALT
   ),
 
-  [SYST] = LAYOUT_split_3x6_3(
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      XXXXXXX,    MUTE, VOLDOWN,   VOLUP, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   RESET,     CAD,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, XXXXXXX,                        KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, XXXXXXX,                        KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,  KC_F12,
-  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI,  KC_SPC, _______,    _______,  KC_ENT, KC_RALT
-                                      //`--------------------------'  `--------------------------'
+  [_SYST] = LAYOUT_split_3x6_3(
+      XXXXXXX,  KC_MUTE,  KC_VOLD,  KC_VOLU,  XXXXXXX,  XXXXXXX,                 XXXXXXX,  XXXXXXX,  XXXXXXX,  EEP_RST,    RESET,      CAD,
+      RGB_TOG,  RGB_HUI,  RGB_SAI,  RGB_VAI,  XXXXXXX,  XXXXXXX,                   KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,
+      RGB_MOD,  RGB_HUD,  RGB_SAD,  RGB_VAD,  XXXXXXX,  XXXXXXX,                   KC_F7,    KC_F8,    KC_F9,   KC_F10,   KC_F11,   KC_F12,
+                                    KC_LGUI,  _______,   KC_SPC,                  KC_ENT,  _______,  KC_RALT
   )
 };
 
@@ -88,32 +76,25 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
   return rotation;
 }
 
-#define L_BASE 0
-#define L_LOWER 2
-#define L_RAISE 4
-#define L_ADJUST 8
-
 void oled_render_layer_state(void) {
     oled_write_P(PSTR("Layer: "), false);
-    switch (layer_state) {
-        case L_BASE:
+    switch (biton32(layer_state)) {
+        case _COLE:
             oled_write_ln_P(PSTR("Colemak"), false);
             break;
-        case L_LOWER:
-            oled_write_ln_P(PSTR("Numbers"), false);
+        case _NUMS:
+            oled_write_ln_P(PSTR("Numbers"), false); 
             break;
-        case L_RAISE:
+        case _SYMS:
             oled_write_ln_P(PSTR("Symbols"), false);
             break;
-        case L_ADJUST:
-        case L_ADJUST|L_LOWER:
-        case L_ADJUST|L_RAISE:
-        case L_ADJUST|L_LOWER|L_RAISE:
+        case _SYST:
             oled_write_ln_P(PSTR("System"), false);
             break;
+        default:
+            oled_write_ln_P(PSTR("????"), false);
     }
 }
-
 
 char keylog_str[24] = {};
 
@@ -185,22 +166,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif // OLED_DRIVER_ENABLE
 
 #ifdef RGBLIGHT_LAYERS
-#define HSV_DARKGREEN 85, 255, 100
-#define HSV_DARKBLUE 170, 255, 100
-#define HSV_DARKRED 10, 255, 50
-#define HSV_DARKYELLOW1 20, 255, 40
-#define HSV_DARKYELLOW2 18, 255, 100
 
 const rgblight_segment_t PROGMEM l_nums_lights[] = RGBLIGHT_LAYER_SEGMENTS(
-    {7, 18, HSV_DARKYELLOW1}
+    {6, 21, HSV_GREEN}
 );
 
 const rgblight_segment_t PROGMEM l_syms_lights[] = RGBLIGHT_LAYER_SEGMENTS(
-    {7, 18, HSV_DARKYELLOW2}
+    {6, 21, HSV_BLUE}
 );
 
 const rgblight_segment_t PROGMEM l_syst_lights[] = RGBLIGHT_LAYER_SEGMENTS(
-    {7, 18, HSV_DARKRED}
+    {6, 21, HSV_RED}
 );
 
 const rgblight_segment_t* const PROGMEM light_layers[] = RGBLIGHT_LAYERS_LIST(
@@ -214,9 +190,9 @@ void keyboard_post_init_user(void) {
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-    rgblight_set_layer_state(0, layer_state_cmp(state, NUMS));
-    rgblight_set_layer_state(1, layer_state_cmp(state, SYMS));
-    rgblight_set_layer_state(2, layer_state_cmp(state, SYST));
+    rgblight_set_layer_state(0, layer_state_cmp(state, _NUMS));
+    rgblight_set_layer_state(1, layer_state_cmp(state, _SYMS));
+    rgblight_set_layer_state(2, layer_state_cmp(state, _SYST));
     return state;
 }
 #endif
